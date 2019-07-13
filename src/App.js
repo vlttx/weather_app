@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import fetchJsonp from 'fetch-jsonp'
-import Button from 'react-bootstrap';
 import './App.css';
 import logo from './logo.svg'
 import CurrentForecast from './components/CurrentForecast'
@@ -19,7 +18,8 @@ class App extends Component{
   this.state ={
     fetchingData: true,
     //once the fetching of data will be finished, set it to false
-    weatherData: {}
+    weatherData: {},
+    forecastKey: null
   }
  }
 
@@ -37,14 +37,21 @@ class App extends Component{
  });
 }
 
+handleForecastChange = forecastKey => this.setState({forecastKey: forecastKey})
+
   render(){
-    const {fetchingData, weatherData } = this.state
+    const {fetchingData, weatherData, forecastKey } = this.state
+    const forecastSpecific = weatherData[forecastKey]
   return (
     <div className="App">
       <header className="App-header">
-        <h2>Weather App</h2>    
+      <br/>
+        <h1>Weather App</h1> 
+        <br/>
+        <Navbar changeForecast={this.handleForecastChange}/>
+        <br></br>   
       </header>
-       <Navbar/>
+       
       <div>
       {fetchingData ?
         <img src={logo} className="App-logo" alt="logo"/> :<CurrentForecast forecast={weatherData.currently}/>}
