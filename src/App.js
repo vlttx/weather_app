@@ -3,6 +3,8 @@ import fetchJsonp from 'fetch-jsonp'
 import './App.css';
 import logo from './logo.svg'
 import CurrentForecast from './components/CurrentForecast'
+import Navbar from './components/Navbar'
+
 
 
 
@@ -41,9 +43,11 @@ class App extends Component{
       <header className="App-header">
         <h2>Weather App</h2>    
       </header>
+       <Navbar/>
       <div>
       {fetchingData ?
         <img src={logo} className="App-logo" alt="logo"/> :<CurrentForecast forecast={weatherData.currently}/>}
+       
       </div>
     </div>
   );
