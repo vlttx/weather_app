@@ -4,6 +4,8 @@ import './App.css';
 import logo from './logo.svg'
 import CurrentForecast from './components/CurrentForecast'
 import Navbar from './components/Navbar'
+import HourlyForecast from './components/HourlyForecast'
+import DailyForecast from './components/DailyForecast'
 
 
 
@@ -19,7 +21,7 @@ class App extends Component{
     fetchingData: true,
     //once the fetching of data will be finished, set it to false
     weatherData: {},
-    forecastKey: null
+    forecastKey: 'currently'
   }
  }
 
@@ -52,11 +54,15 @@ handleForecastChange = forecastKey => this.setState({forecastKey: forecastKey})
         <br></br>   
       </header>
        
-      <div>
+      
       {fetchingData ?
-        <img src={logo} className="App-logo" alt="logo"/> :<CurrentForecast forecast={weatherData.currently}/>}
-       
+        <img src={logo} className="App-logo" alt="logo"/> :
+        <div>
+        {forecastKey ==='currently' && <CurrentForecast forecast={forecastSpecific}/>}
+        {forecastKey === 'hourly' && <HourlyForecast forecast={forecastSpecific.data}/>}
+        {forecastKey === 'daily' && <DailyForecast forecast={forecastSpecific.data}/>}
       </div>
+    }
     </div>
   );
 }
