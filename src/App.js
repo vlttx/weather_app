@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fetchJsonp from 'fetch-jsonp'
-import './App.css';
+// import './App.css';
 import logo from './logo.svg'
 import CurrentForecast from './components/CurrentForecast'
 import Navbar from './components/Navbar'
@@ -61,7 +61,7 @@ handleForecastChange = forecastKey => this.setState({forecastKey: forecastKey})
         {forecastKey ==='currently' && <CurrentForecast forecast={forecastSpecific}/>}
         {forecastKey === 'hourly' && <HourlyForecast forecast={forecastSpecific.data}/>}
         {forecastKey === 'daily' && <DailyForecast forecast={forecastSpecific.data}/>}
-      </div>
+        </div>
     }
     </div>
   );
