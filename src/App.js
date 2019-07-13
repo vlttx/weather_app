@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import logo from './logo.svg'
 
-function App() {
+class App extends Component{
+ constructor() {
+  super()
+
+  this.state ={
+    fetchingData: true,
+    //once the fetching of data will be finished, set it to false
+    weatherDate: {}
+  }
+ }
+
+  render(){
+    const {fetchingData } = this.state
+    console.log(fetchingData)
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h2>Weather App</h2>    
       </header>
+      <p>
+      {fetchingData ?
+        <img src={logo} className="App-logo" alt="logo"/> : <h2>Data was received</h2>}
+      </p>
     </div>
   );
+}
 }
 
 export default App;
