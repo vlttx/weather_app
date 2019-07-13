@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import fetchJsonp from 'fetch-jsonp'
 import './App.css';
 import logo from './logo.svg'
+import CurrentForecast from './components/CurrentForecast'
 
 
 
@@ -25,22 +26,25 @@ class App extends Component{
     const site = `${APIURL}${latitude},${longitude}`
     fetchJsonp(site)
   .then(response => response.json())
-  .then(forecast => console.log(forecast))
+  .then(weatherData => this.setState({
+    fetchingData: false,
+    weatherData
+  }))
   // });
- })
+ });
 }
 
   render(){
-    const {fetchingData } = this.state
+    const {fetchingData, weatherData } = this.state
   return (
     <div className="App">
       <header className="App-header">
         <h2>Weather App</h2>    
       </header>
-      <p>
+      <div>
       {fetchingData ?
-        <img src={logo} className="App-logo" alt="logo"/> : <h2>Data was received</h2>}
-      </p>
+        <img src={logo} className="App-logo" alt="logo"/> :<CurrentForecast forecast={weatherData.currently}/>}
+      </div>
     </div>
   );
 }
