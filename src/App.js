@@ -23,7 +23,7 @@ class App extends Component{
     fetchingData: true,
     //once the fetching of data will be finished, set it to false
     weatherData: {},
-    forecastKey: 'currently'
+    // forecastKey: 'currently'
   }
  }
 
@@ -42,7 +42,7 @@ class App extends Component{
 }
 
 // handleForecastChange = forecastKey => this.setState({forecastKey: forecastKey})
-handleForecastChange = routeName => this.props.changeForecast({routeName: routeName})
+handleRouteChange = routeName => this.props.changeRoute({routeName: routeName})
 
   render(){
     const {fetchingData, weatherData, forecastKey } = this.state
@@ -53,7 +53,7 @@ handleForecastChange = routeName => this.props.changeForecast({routeName: routeN
       <br/>
         <h1>Weather App</h1> 
         <br/>
-        <Navbar changeForecast={this.handleForecastChange}/>
+        <Navbar changeForecast={this.handleRouteChange}/>
         <br></br>   
       </header>
        
@@ -71,4 +71,8 @@ handleForecastChange = routeName => this.props.changeForecast({routeName: routeN
 }
 }
 
-export default connect(null, { changeRoute })(App);
+export default connect(
+  state => ({
+    routeName: state.route.routeName
+  })
+    , { changeRoute })(App);
