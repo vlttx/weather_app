@@ -1,24 +1,22 @@
   
 
-import {createStore, applyMiddleware, combineReducers} from 'redux'
+import {createStore, applyMiddleware, combineReducers, compose} from 'redux'
 import thunk from 'redux-thunk'
 import fetchingData from '../reducers/fetchingDataReducer';
 import weatherData from '../reducers/weatherDataReducer';
 import route from '../reducers/routeReducer';
 
-
-const middlewares = [thunk]
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const middlewares = [thunk]
 const reducers = combineReducers({fetchingData,
 	weatherData,
-	route})
+	route
+});
 
 
 export default createStore(
 	reducers,
-	applyMiddleware(...middlewares))
+	composeEnhancer(applyMiddleware(thunk)),
+	)
 
-  // store = {fetchingData: true,
-  //   //once the fetching of data will be finished, set it to false
-  //   weatherData: {},
-  //   forecastKey: 'currently'
-  // }
+  
