@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import fetchJsonp from 'fetch-jsonp'
 // import './App.css';
 import logo from './logo.svg'
@@ -6,6 +7,7 @@ import CurrentForecast from './components/CurrentForecast'
 import Navbar from './components/Navbar'
 import HourlyForecast from './components/HourlyForecast'
 import DailyForecast from './components/DailyForecast'
+import { changeRoute } from './actions/routeActions'
 
 
 
@@ -39,7 +41,8 @@ class App extends Component{
  });
 }
 
-handleForecastChange = forecastKey => this.setState({forecastKey: forecastKey})
+// handleForecastChange = forecastKey => this.setState({forecastKey: forecastKey})
+handleForecastChange = routeName => this.props.changeForecast({routeName: routeName})
 
   render(){
     const {fetchingData, weatherData, forecastKey } = this.state
@@ -68,4 +71,4 @@ handleForecastChange = forecastKey => this.setState({forecastKey: forecastKey})
 }
 }
 
-export default App;
+export default connect(null, { changeRoute })(App);
