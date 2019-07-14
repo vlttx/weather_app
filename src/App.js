@@ -8,6 +8,7 @@ import Navbar from './components/Navbar'
 import HourlyForecast from './components/HourlyForecast'
 import DailyForecast from './components/DailyForecast'
 import { changeRoute } from './actions/routeActions'
+import { stopFetchingData } from './actions/fetchingDataActions'
 
 
 
@@ -20,7 +21,7 @@ class App extends Component{
   super()
 
   this.state ={
-    fetchingData: true,
+    // fetchingData: true,
     //once the fetching of data will be finished, set it to false
     weatherData: {},
     // forecastKey: 'currently'
@@ -32,28 +33,32 @@ class App extends Component{
     const { latitude, longitude} = position.coords
     const site = `${APIURL}${latitude},${longitude}`
     fetchJsonp(site)
-  .then(response => response.json())
-  .then(weatherData => this.setState({
-    fetchingData: false,
-    weatherData
-  }))
-  // });
- });
-}
+      .then(response => response.json())
+      .then(weatherData => {
+        this.setState({
+        weatherData
+  })
+  setTimeout(() => {this.props.stopFetchingData()}, 2000)
+  })
+  });
+ };
 
 // handleForecastChange = forecastKey => this.setState({forecastKey: forecastKey})
 handleRouteChange = routeName => this.props.changeRoute({routeName: routeName})
 
   render(){
-    const {fetchingData, weatherData, forecastKey } = this.state
-    const forecastSpecific = weatherData[forecastKey]
+    const {weatherData} = this.state
+    console.log(weatherData)
+    const { fetchingData, routeName } = this.props
+    //grabbing the route name and fetchingData value out of props
+    const forecastSpecific = weatherData[routeName]
   return (
     <div className="App">
       <header className="App-header">
       <br/>
         <h1>Weather App</h1> 
         <br/>
-        <Navbar changeForecast={this.handleRouteChange}/>
+        <Navbar changeRoute={this.handleRouteChange}/>
         <br></br>   
       </header>
        
@@ -61,9 +66,9 @@ handleRouteChange = routeName => this.props.changeRoute({routeName: routeName})
       {fetchingData ?
         <img src={logo} className="App-logo" alt="logo"/> :
         <div>
-        {forecastKey ==='currently' && <CurrentForecast forecast={forecastSpecific}/>}
-        {forecastKey === 'hourly' && <HourlyForecast forecast={forecastSpecific.data}/>}
-        {forecastKey === 'daily' && <DailyForecast forecast={forecastSpecific.data}/>}
+        {routeName ==='currently' && <CurrentForecast forecast={forecastSpecific}/>}
+        {routeName === 'hourly' && <HourlyForecast forecast={forecastSpecific.data}/>}
+        {routeName === 'daily' && <DailyForecast forecast={forecastSpecific.data}/>}
         </div>
     }
     </div>
@@ -73,6 +78,7 @@ handleRouteChange = routeName => this.props.changeRoute({routeName: routeName})
 
 export default connect(
   state => ({
+    fetchingData: state.fetchingData,
     routeName: state.route.routeName
   })
-    , { changeRoute })(App);
+    , { changeRoute, stopFetchingData })(App);
