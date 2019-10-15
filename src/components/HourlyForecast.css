@@ -1,0 +1,7 @@
+.hourly {
+	border: solid 2px blue;
+	padding: 16px;
+	margin: 16px;
+	width: 200px;
+	display: inline-block;
+}
