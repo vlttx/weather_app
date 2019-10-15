@@ -1,0 +1,7 @@
+.daily {
+	border: solid 2px red;
+	padding: 16px;
+	margin: 16px;
+	width: 200px;
+	display: inline-block;
+}
